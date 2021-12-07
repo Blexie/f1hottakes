@@ -42,5 +42,5 @@ for i in LASTTWEET:
 
 if TWEET == OLDTWEET:
     print("Duplicate")
-#else:
-#    api.update_status(TWEET)
+else:
+    api.update_status(TWEET)
