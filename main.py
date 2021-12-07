@@ -1,7 +1,6 @@
 import tweepy
 import praw
 import hottakesauth
-import string
 from random import randrange
 
 # Twitter Auth
@@ -77,13 +76,15 @@ else:
     AT = randomat()
 
 TWEET = COMMENT + " " + AT + " #F1"
-if COMMENT != OLDTWEET:
-    api.update_status(TWEET)
+if COMMENT != OLDTWEET and len(TWEET) < 280:
+    #api.update_status(TWEET)
     print("Tweeted: " + TWEET)
     print(OLDTWEET)
-elif len(TWEET) >280:
-    print("Unable to tweet: " +TWEET)
+elif len(TWEET) > 280:
+    print("Unable to tweet: " + TWEET)
     print("Tweet too long" + len(TWEET))
-else:
+elif COMMENT == OLDTWEET:
     print("Did not tweet: " + TWEET)
-    print("Duplicate: "+ OLDTWEET)
+    print("Duplicate: " + OLDTWEET)
+else:
+    print("Unknown error.")
