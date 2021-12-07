@@ -29,10 +29,11 @@ def generatetweet():
         submission.comment_sort = "controversial"
         if submission.comments[0].author == "automoderator":
             COMMENT = submission.comments[0 + 1].body
+            ID = submission.comments[0 + 1].id
         else:
             COMMENT = submission.comments[0].body
-    return COMMENT
-
+            ID = submission.comments[0].id
+    return COMMENT, ID
 
 # Random @ Mention
 def randomat():
@@ -43,53 +44,40 @@ def randomat():
     NUM_ATS = len(ATS)
     return ATS[randrange(NUM_ATS)]
 
-# Get last tweet for comparison.
-def getoldtweet():
-    LASTTWEET = api.user_timeline(screen_name=hottakesauth.SCREEN_NAME,
-                                  count=1,
-                                  include_rts=False,
-                                  tweet_mode='extended')
-    for i in LASTTWEET:
-        OLDTWEET = i.full_text
-
-
-    def strip_all_entities(text):
-        entity_prefixes = ['@', '#']
-        words = []
-        for word in text.split():
-            word = word.strip()
-            if word:
-                if word[0] not in entity_prefixes:
-                    words.append(word)
-        return ' '.join(words)
-
-
-    for i in LASTTWEET:
-        OLDTWEET = strip_all_entities(i.full_text)
-    return OLDTWEET
-
 def sendit():
     COMMENT = generatetweet()
 
     RBRMATCHES = ["rbr", "RBR", "Max", "Red Bull"]
+    WILLIAMSMATCHES = ["williams"]
+    RUSSELLMATCHES = ["Russell"]
 
-    if any(x in COMMENT for x in RBRMATCHES):
+    if any(x in COMMENT[0] for x in RBRMATCHES):
         AT = "@redbullracing"
+    elif any(x in COMMENT[0] for x in WILLIAMSMATCHES):
+        AT = "@WilliamsRacing"
+    elif any(x in COMMENT[0] for x in RUSSELLMATCHES):
+        AT = "@GeorgeRussell63"
     else:
         AT = randomat()
+# Check for repetition
+    with open("oldtweets.txt") as file:
+        OLDTWEETS = file.readlines()
 
-    OLDTWEET = getoldtweet()
-    TWEET = COMMENT + " " + AT + " #F1"
-    if COMMENT != OLDTWEET and len(TWEET) < 280:
+    OLDTWEETFILE = open('oldtweets.txt','a')
+    TWEET = COMMENT[0] + " " + AT + " #F1"
+    if COMMENT[1] not in OLDTWEETS and len(TWEET) < 280:
         #api.update_status(TWEET)
         print("Tweeted: " + TWEET)
-        print(OLDTWEET)
+        OLDTWEETFILE.write(COMMENT[1])
+        OLDTWEETFILE.close()
     elif len(TWEET) > 280:
         print("Unable to tweet: " + TWEET)
         print("Tweet too long" + len(TWEET))
-    elif COMMENT == OLDTWEET:
+    elif COMMENT[1] in OLDTWEETS:
         print("Did not tweet: " + TWEET)
-        print("Duplicate: " + OLDTWEET)
+        print("Duplicate: " + COMMENT[1])
     else:
         print("Unknown error.")
+
+
 sendit()
