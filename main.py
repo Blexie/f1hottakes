@@ -1,6 +1,7 @@
 import tweepy
 import praw
 import hottakesauth
+from random import randrange
 
 # Twitter Auth
 CONSUMER_KEY = hottakesauth.CONSUMER_KEY
@@ -17,9 +18,17 @@ reddit = praw.Reddit(
 for submission in reddit.subreddit("formula1").controversial("day", limit=1):
     submission.comment_sort = "controversial"
     if submission.comments[0].author == "automoderator":
-        TWEET = submission.comments[0 + 1].body
+        COMMENT = submission.comments[0 + 1].body
     else:
-        TWEET = submission.comments[0].body
+        COMMENT = submission.comments[0].body
+
+# Random @ Mention
+
+with open("ats.txt") as file:
+    ATS = file.readlines()
+    ATS = [line.rstrip() for line in ATS]
+
+NUM_ATS = len(ATS)
 
 # Twitter
 auth = tweepy.OAuthHandler(CONSUMER_KEY,
@@ -38,7 +47,10 @@ LASTTWEET = api.user_timeline(screen_name=hottakesauth.SCREEN_NAME,
 for i in LASTTWEET:
     OLDTWEET = i.full_text
 
-if TWEET != OLDTWEET:
+TWEET = COMMENT + " " + ATS[randrange(NUM_ATS)] + " #F1"
+if COMMENT != OLDTWEET:
     api.update_status(TWEET)
+    print("Tweeted" + TWEET)
 else:
+    print("Did not tweet: " + TWEET)
     print("Duplicate")
