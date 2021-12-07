@@ -15,20 +15,26 @@ reddit = praw.Reddit(
     user_agent=hottakesauth.USER_AGENT,
 )
 
-for submission in reddit.subreddit("formula1").controversial("day", limit=1):
-    submission.comment_sort = "controversial"
-    if submission.comments[0].author == "automoderator":
-        COMMENT = submission.comments[0 + 1].body
-    else:
-        COMMENT = submission.comments[0].body
+# Generate tweet body.
+def generatetweet():
+    for submission in reddit.subreddit("formula1").controversial("day", limit=1):
+        submission.comment_sort = "controversial"
+        if submission.comments[0].author == "automoderator":
+            COMMENT = submission.comments[0 + 1].body
+        else:
+            COMMENT = submission.comments[0].body
+    return COMMENT
+
 
 # Random @ Mention
+def randomat():
+    with open("ats.txt") as file:
+        ATS = file.readlines()
+        ATS = [line.rstrip() for line in ATS]
 
-with open("ats.txt") as file:
-    ATS = file.readlines()
-    ATS = [line.rstrip() for line in ATS]
+    NUM_ATS = len(ATS)
+    return ATS[randrange(NUM_ATS)]
 
-NUM_ATS = len(ATS)
 
 # Twitter
 auth = tweepy.OAuthHandler(CONSUMER_KEY,
@@ -47,10 +53,19 @@ LASTTWEET = api.user_timeline(screen_name=hottakesauth.SCREEN_NAME,
 for i in LASTTWEET:
     OLDTWEET = i.full_text
 
-TWEET = COMMENT + " " + ATS[randrange(NUM_ATS)] + " #F1"
+COMMENT = generatetweet()
+
+RBRMATCHES = ["rbr", "RBR", "Max", "Red Bull"]
+
+if any(x in COMMENT for x in RBRMATCHES):
+    AT = "@redbullracing"
+else:
+    AT = randomat()
+
+TWEET = COMMENT + " " + AT + " #F1"
 if COMMENT != OLDTWEET:
     api.update_status(TWEET)
-    print("Tweeted" + TWEET)
+    print("Tweeted: " + TWEET)
 else:
     print("Did not tweet: " + TWEET)
     print("Duplicate")
