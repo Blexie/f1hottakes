@@ -21,8 +21,6 @@ for submission in reddit.subreddit("formula1").controversial("day", limit=1):
     else:
         TWEET = submission.comments[0].body
 
-
-
 # Twitter
 auth = tweepy.OAuthHandler(CONSUMER_KEY,
                            CONSUMER_SECRET)
@@ -34,13 +32,13 @@ api = tweepy.API(auth)
 
 # Check tweet is unique, and if it is, post it.
 LASTTWEET = api.user_timeline(screen_name=hottakesauth.SCREEN_NAME,
-                          count=1,
-                          include_rts = False,
-                          tweet_mode = 'extended')
+                              count=1,
+                              include_rts=False,
+                              tweet_mode='extended')
 for i in LASTTWEET:
     OLDTWEET = i.full_text
 
-if TWEET == OLDTWEET:
-    print("Duplicate")
-else:
+if TWEET != OLDTWEET:
     api.update_status(TWEET)
+else:
+    print("Duplicate")
