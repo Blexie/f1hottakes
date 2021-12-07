@@ -66,7 +66,7 @@ def sendit():
     OLDTWEETFILE = open('oldtweets.txt','a')
     TWEET = COMMENT[0] + " " + AT + " #F1"
     if COMMENT[1] not in OLDTWEETS and len(TWEET) < 280:
-        #api.update_status(TWEET)
+        api.update_status(TWEET)
         print("Tweeted: " + TWEET)
         OLDTWEETFILE.write(COMMENT[1])
         OLDTWEETFILE.close()
