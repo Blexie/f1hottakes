@@ -77,7 +77,7 @@ else:
 
 TWEET = COMMENT + " " + AT + " #F1"
 if COMMENT != OLDTWEET and len(TWEET) < 280:
-    #api.update_status(TWEET)
+    api.update_status(TWEET)
     print("Tweeted: " + TWEET)
     print(OLDTWEET)
 elif len(TWEET) > 280:
