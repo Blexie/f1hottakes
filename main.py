@@ -33,7 +33,7 @@ auth.set_access_token(ACCESS_TOKEN,
 api = tweepy.API(auth)
 
 # Check tweet is unique, and if it is, post it.
-LASTTWEET = api.user_timeline(screen_name="takes_f1",
+LASTTWEET = api.user_timeline(screen_name=hottakesauth.SCREEN_NAME,
                           count=1,
                           include_rts = False,
                           tweet_mode = 'extended')
