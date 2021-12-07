@@ -35,6 +35,7 @@ def generatetweet():
             ID = submission.comments[0].id
     return COMMENT, ID
 
+
 # Random @ Mention
 def randomat():
     with open("ats.txt") as file:
@@ -43,6 +44,7 @@ def randomat():
 
     NUM_ATS = len(ATS)
     return ATS[randrange(NUM_ATS)]
+
 
 def sendit():
     COMMENT = generatetweet()
@@ -63,7 +65,7 @@ def sendit():
     with open("oldtweets.txt") as file:
         OLDTWEETS = file.readlines()
 
-    OLDTWEETFILE = open('oldtweets.txt','a')
+    OLDTWEETFILE = open('oldtweets.txt', 'a')
     TWEET = COMMENT[0] + " " + AT + " #F1"
     if COMMENT[1] not in OLDTWEETS and len(TWEET) < 280:
         api.update_status(TWEET)
