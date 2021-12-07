@@ -15,6 +15,7 @@ reddit = praw.Reddit(
     user_agent=hottakesauth.USER_AGENT,
 )
 
+
 # Generate tweet body.
 def generatetweet():
     for submission in reddit.subreddit("formula1").controversial("day", limit=1):
@@ -53,8 +54,9 @@ LASTTWEET = api.user_timeline(screen_name=hottakesauth.SCREEN_NAME,
 for i in LASTTWEET:
     OLDTWEET = i.full_text
 
+
 def strip_all_entities(text):
-    entity_prefixes = ['@','#']
+    entity_prefixes = ['@', '#']
     words = []
     for word in text.split():
         word = word.strip()
@@ -62,6 +64,7 @@ def strip_all_entities(text):
             if word[0] not in entity_prefixes:
                 words.append(word)
     return ' '.join(words)
+
 
 for i in LASTTWEET:
     OLDTWEET = strip_all_entities(i.full_text)
