@@ -2,6 +2,7 @@ import tweepy
 import praw
 import hottakesauth
 from random import randrange
+from time import sleep
 
 # Twitter Setup
 CONSUMER_KEY = hottakesauth.CONSUMER_KEY
@@ -62,10 +63,10 @@ def sendit():
     else:
         AT = randomat()
 # Check for repetition
-    with open("oldtweets.txt") as file:
+    with open("volume/" + "oldtweets.txt") as file:
         OLDTWEETS = file.readlines()
 
-    OLDTWEETFILE = open('oldtweets.txt', 'a')
+    OLDTWEETFILE = open('volume/' + 'oldtweets.txt', 'a')
     TWEET = COMMENT[0] + " " + AT + " #F1"
     if COMMENT[1] not in OLDTWEETS and len(TWEET) < 280:
         api.update_status(TWEET)
@@ -82,4 +83,9 @@ def sendit():
         print("Unknown error.")
 
 
-sendit()
+try:
+    while True:
+        sendit()
+        sleep(21600)
+except KeyboardInterrupt:
+    print("Interrupted!")
