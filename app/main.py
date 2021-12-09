@@ -43,12 +43,10 @@ def generatetweethot():
         submission.comment_sort = "controversial"
         if not submission.stickied:
             if submission.comments[0].author == "automoderator":
-                print(submission.title)
                 COMMENT = submission.comments[0 + 1].body
                 ID = submission.comments[0 + 1].id
                 break
             else:
-                print(submission.title)
                 COMMENT = submission.comments[0].body
                 ID = submission.comments[0].id
                 break
@@ -84,14 +82,14 @@ def sendit():
         AT = randomat()
 # Check for repetition
     with open("volume/" + "oldtweets.txt") as file:
-        OLDTWEETS = file.readlines()
+        OLDTWEETS = file.read().splitlines()
 
     OLDTWEETFILE = open('volume/' + 'oldtweets.txt', 'a')
     TWEET = COMMENT[0] + " " + AT + " #F1"
     if COMMENT[1] not in OLDTWEETS and len(TWEET) < 280:
         api.update_status(TWEET)
         print("Tweeted: " + TWEET)
-        OLDTWEETFILE.write(COMMENT[1])
+        OLDTWEETFILE.write(COMMENT[1] + "\n")
         OLDTWEETFILE.close()
     elif len(TWEET) > 280:
         print("Unable to tweet: " + TWEET)
