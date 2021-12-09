@@ -87,7 +87,7 @@ def sendit():
     OLDTWEETFILE = open('volume/' + 'oldtweets.txt', 'a')
     TWEET = COMMENT[0] + " " + AT + " #F1"
     if COMMENT[1] not in OLDTWEETS and len(TWEET) < 280:
-        #api.update_status(TWEET)
+        api.update_status(TWEET)
         print("Tweeted: " + TWEET)
         OLDTWEETFILE.write(COMMENT[1] + "\n")
         OLDTWEETFILE.close()
@@ -104,6 +104,6 @@ def sendit():
 try:
     while True:
         sendit()
-        sleep(20)
+        sleep(21600)
 except KeyboardInterrupt:
     print("Interrupted!")
