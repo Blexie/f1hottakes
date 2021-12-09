@@ -1,7 +1,7 @@
 import tweepy
 import praw
 import hottakesauth
-from random import randrange
+from random import randrange, choice
 from time import sleep
 
 # Twitter Setup
@@ -24,7 +24,7 @@ reddit = praw.Reddit(
 )
 
 
-# Generate tweet body.
+# Generate tweet body (controversial threads)
 def generatetweet():
     for submission in reddit.subreddit("formula1").controversial("day", limit=1):
         submission.comment_sort = "controversial"
@@ -34,6 +34,24 @@ def generatetweet():
         else:
             COMMENT = submission.comments[0].body
             ID = submission.comments[0].id
+    return COMMENT, ID
+
+
+# Generate tweet body (hot threads)
+def generatetweethot():
+    for submission in reddit.subreddit("formula1").hot(limit=10):
+        submission.comment_sort = "controversial"
+        if not submission.stickied:
+            if submission.comments[0].author == "automoderator":
+                print(submission.title)
+                COMMENT = submission.comments[0 + 1].body
+                ID = submission.comments[0 + 1].id
+                break
+            else:
+                print(submission.title)
+                COMMENT = submission.comments[0].body
+                ID = submission.comments[0].id
+                break
     return COMMENT, ID
 
 
@@ -48,7 +66,9 @@ def randomat():
 
 
 def sendit():
-    COMMENT = generatetweet()
+    # Choose hot or controversial thread
+    hotornot = [generatetweet, generatetweethot]
+    COMMENT = choice(hotornot)()
 
     RBRMATCHES = ["rbr", "RBR", "Max", "Red Bull"]
     WILLIAMSMATCHES = ["williams"]
