@@ -41,8 +41,8 @@ def generatetweet():
 def generatetweethot():
     for submission in reddit.subreddit("formula1").hot(limit=10):
         submission.comment_sort = "controversial"
-        if not submission.stickied:
-            if submission.comments[0].author == "automoderator":
+        if not submission.stickied or "Race Discussion" in submission.title:
+            if submission.comments[0].author == "automoderator" or submission.comments[0].stickied:
                 COMMENT = submission.comments[0 + 1].body
                 ID = submission.comments[0 + 1].id
                 break
@@ -87,7 +87,7 @@ def sendit():
     OLDTWEETFILE = open('volume/' + 'oldtweets.txt', 'a')
     TWEET = COMMENT[0] + " " + AT + " #F1"
     if COMMENT[1] not in OLDTWEETS and len(TWEET) < 280:
-        api.update_status(TWEET)
+        #api.update_status(TWEET)
         print("Tweeted: " + TWEET)
         OLDTWEETFILE.write(COMMENT[1] + "\n")
         OLDTWEETFILE.close()
@@ -104,6 +104,6 @@ def sendit():
 try:
     while True:
         sendit()
-        sleep(21600)
+        sleep(20)
 except KeyboardInterrupt:
     print("Interrupted!")
