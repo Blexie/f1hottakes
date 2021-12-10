@@ -28,11 +28,14 @@ reddit = praw.Reddit(
 def generatetweet():
     for submission in reddit.subreddit("formula1").controversial("day", limit=1):
         submission.comment_sort = "controversial"
-        if submission.comments[0].author == "automoderator" or submission.comments[0].stickied or submission.comments[0].body == "[removed]":
-            continue
-        else:
-            COMMENT = submission.comments[0].body
-            ID = submission.comments[0].id
+        if not submission.stickied or "Race Discussion" in submission.title:
+          for comment in submission.comments:
+            if submission.comments.author == "automoderator" or submission.comments.stickied or submission.comments.body == "[removed]":
+                continue
+            else:
+                COMMENT = submission.comments.body
+                ID = submission.comments.id
+                break
     return COMMENT, ID
 
 
@@ -41,11 +44,12 @@ def generatetweethot():
     for submission in reddit.subreddit("formula1").hot(limit=10):
         submission.comment_sort = "controversial"
         if not submission.stickied or "Race Discussion" in submission.title:
-            if submission.comments[0].author == "automoderator" or submission.comments[0].stickied or submission.comments[0].body == "[removed]":
+          for comment in submission.comments:
+            if submission.comments.author == "automoderator" or submission.comments.stickied or submission.comments.body == "[removed]":
                 continue
             else:
-                COMMENT = submission.comments[0].body
-                ID = submission.comments[0].id
+                COMMENT = submission.comments.body
+                ID = submission.comments.id
                 break
     return COMMENT, ID
 
