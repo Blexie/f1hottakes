@@ -29,8 +29,7 @@ def generatetweet():
     for submission in reddit.subreddit("formula1").controversial("day", limit=1):
         submission.comment_sort = "controversial"
         if submission.comments[0].author == "automoderator" or submission.comments[0].stickied or submission.comments[0].body == "[removed]":
-            COMMENT = submission.comments[0 + 1].body
-            ID = submission.comments[0 + 1].id
+            continue
         else:
             COMMENT = submission.comments[0].body
             ID = submission.comments[0].id
@@ -43,9 +42,7 @@ def generatetweethot():
         submission.comment_sort = "controversial"
         if not submission.stickied or "Race Discussion" in submission.title:
             if submission.comments[0].author == "automoderator" or submission.comments[0].stickied or submission.comments[0].body == "[removed]":
-                COMMENT = submission.comments[0 + 1].body
-                ID = submission.comments[0 + 1].id
-                break
+                continue
             else:
                 COMMENT = submission.comments[0].body
                 ID = submission.comments[0].id
