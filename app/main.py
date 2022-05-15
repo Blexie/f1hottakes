@@ -29,7 +29,7 @@ def generatetweet():
     BREAKFLAG = None
     COMMENT = None
     ID = None
-    for submission in reddit.subreddit("formula1").controversial("day", limit=1):
+    for submission in reddit.subreddit("formula1").controversial(time_filter="day", limit=1):
         submission.comment_sort = "controversial"
         if BREAKFLAG is None:
             if "Race Discussion" in submission.title or not submission.stickied:
