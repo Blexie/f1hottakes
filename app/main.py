@@ -97,7 +97,7 @@ def sendit():
         return
 
     # Team and Driver Twitter Handles
-    RBRMATCHES = ["rbr" "max", "red bull", "jos", "verstappen", "perez"]
+    RBRMATCHES = ["rbr", "max", "red bull", "jos", "verstappen", "perez"]
     WILLIAMSMATCHES = ["williams", "latifi", "alex", "albon"]
     RUSSELLMATCHES = ["russell"]
     MERCEDESMATCHES = ["lewis", "mercedes", "merc", "hamilton"]
