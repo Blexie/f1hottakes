@@ -27,6 +27,8 @@ reddit = praw.Reddit(
 # Generate tweet body (controversial threads)
 def generatetweet():
     BREAKFLAG = None
+    COMMENT = None
+    ID = None
     for submission in reddit.subreddit("formula1").controversial("day", limit=1):
         submission.comment_sort = "controversial"
         if BREAKFLAG is None:
@@ -43,12 +45,17 @@ def generatetweet():
                         break
         else:
             break
-    return COMMENT, ID
+    if COMMENT is not None:
+        return COMMENT, ID
+    else:
+        return "REDDIT DOWN", 1
 
 
 # Generate tweet body (hot threads)
 def generatetweethot():
     BREAKFLAG = None
+    COMMENT = None
+    ID = None
     for submission in reddit.subreddit("formula1").hot(limit=10):
         submission.comment_sort = "controversial"
         if BREAKFLAG is None:
@@ -63,9 +70,12 @@ def generatetweethot():
                         BREAKFLAG = True
                         print("Comment selected: " + comment.permalink)
                         break
-        else: break
-    return COMMENT, ID
-
+        else:
+            break
+    if COMMENT is not None:
+        return COMMENT, ID
+    else:
+        return "REDDIT DOWN", 1
 
 
 # Random @ Mention
@@ -82,7 +92,11 @@ def sendit():
     # Choose hot or controversial thread
     hotornot = [generatetweet, generatetweethot]
     COMMENT = choice(hotornot)()
+    if COMMENT[0] == "REDDIT DOWN":
+        print("Reddit seems to be down. Sleeping...")
+        return
 
+    # Team and Driver Twitter Handles
     RBRMATCHES = ["rbr" "max", "red bull", "jos", "verstappen", "perez"]
     WILLIAMSMATCHES = ["williams", "latifi"]
     RUSSELLMATCHES = ["russell"]
