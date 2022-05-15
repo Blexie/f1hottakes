@@ -98,15 +98,15 @@ def sendit():
 
     # Team and Driver Twitter Handles
     RBRMATCHES = ["rbr" "max", "red bull", "jos", "verstappen", "perez"]
-    WILLIAMSMATCHES = ["williams", "latifi"]
+    WILLIAMSMATCHES = ["williams", "latifi", "alex", "albon"]
     RUSSELLMATCHES = ["russell"]
-    MERCEDESMATCHES = ["lewis", "mercedes", "merc", "hamilton", "bottas"]
+    MERCEDESMATCHES = ["lewis", "mercedes", "merc", "hamilton"]
     ALPINEMATCHES = ["fernando", "alonso", "alpine", "ocon"]
     ASTONMATCHES = ["stroll", "seb", "vettel", "aston"]
     FERRARIMATCHES = ["charles", "leclerc", "carlos", "sainz", "ferrari", "sbinalla"]
-    MCLARENMATCHES = ["lando", "norris", "danny", "danny ric", "mclaren"]
-    ALFAMATCHES = ["alfa", "kimi", "gio"]
-    HAASMATCHES = ["mick", "nikita", "mazepin", "haas", "steiner"]
+    MCLARENMATCHES = ["lando", "norris", "danny", "ricciardo", "danny ric", "mclaren"]
+    ALFAMATCHES = ["alfa", "bottas", "valtteri", "zhou", "guanyu"]
+    HAASMATCHES = ["mick", "kevin", "magnussen", "kmag", "haas", "steiner"]
     ALPHATMATCHES = ["yuki", "tsunoda", "pierre", "gasly", "alpha tauri"]
 
     if any(x in COMMENT[0] for x in RBRMATCHES):
