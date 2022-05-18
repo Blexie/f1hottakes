@@ -126,7 +126,7 @@ def sendit():
     elif any(x in COMMENT[0].lower() for x in MCLARENMATCHES):
         AT = "@McLarenF1"
     elif any(x in COMMENT[0].lower() for x in ALFAMATCHES):
-        AT = "@alfaromeoracing"
+        AT = "@alfaromeoorlen"
     elif any(x in COMMENT[0].lower() for x in HAASMATCHES):
         AT = "@HaasF1Team"
     elif any(x in COMMENT[0].lower() for x in ALPHATMATCHES):
