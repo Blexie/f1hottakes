@@ -157,6 +157,6 @@ def sendit():
 try:
     while True:
         sendit()
-        sleep(3600)
+        sleep(10800)
 except KeyboardInterrupt:
     print("Interrupted!")
