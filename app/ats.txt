@@ -1,6 +1,6 @@
 @F1
 @SkySportsF1
-@alfaromeoracing
+@alfaromeoorlen
 @alphataurif1
 @scuderiaferrari
 @HaasF1Team
