@@ -97,17 +97,17 @@ def sendit():
         return
 
     # Team and Driver Twitter Handles
-    RBRMATCHES = ["rbr", "max", "red bull", "jos", "verstappen", "perez"]
-    WILLIAMSMATCHES = ["williams", "latifi", "alex", "albon"]
-    RUSSELLMATCHES = ["russell"]
+    RBRMATCHES = ["rbr", "max", "red bull", "verstappen", "perez", "checo"]
+    WILLIAMSMATCHES = ["williams", "sargeant", "logan", "alex", "albon"]
+    RUSSELLMATCHES = ["russell", "george"]
     MERCEDESMATCHES = ["lewis", "mercedes", "merc", "hamilton"]
-    ALPINEMATCHES = ["fernando", "alonso", "alpine", "ocon"]
-    ASTONMATCHES = ["stroll", "seb", "vettel", "aston"]
+    ALPINEMATCHES = ["pierre", "gasly", "alpine", "ocon"]
+    ASTONMATCHES = ["stroll", "fernando", "alonso", "aston"]
     FERRARIMATCHES = ["charles", "leclerc", "carlos", "sainz", "ferrari", "sbinalla"]
-    MCLARENMATCHES = ["lando", "norris", "danny", "ricciardo", "danny ric", "mclaren"]
+    MCLARENMATCHES = ["lando", "norris", "piastri", "oscar", "mclaren"]
     ALFAMATCHES = ["alfa", "bottas", "valtteri", "zhou", "guanyu"]
-    HAASMATCHES = ["mick", "kevin", "magnussen", "kmag", "haas", "steiner"]
-    ALPHATMATCHES = ["yuki", "tsunoda", "pierre", "gasly", "alpha tauri"]
+    HAASMATCHES = ["hulkenberg", "hulk", "kevin", "magnussen", "kmag", "haas", "steiner"]
+    ALPHATMATCHES = ["de vries", "nyck", "yuki", "tsunoda", "alpha tauri"]
 
     if any(x in COMMENT[0] for x in RBRMATCHES):
         AT = "@redbullracing"
